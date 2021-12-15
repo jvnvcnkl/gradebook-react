@@ -1,17 +1,46 @@
+import React, { useState } from "react"
+import {useDispatch} from "react-redux"
 
+import {login } from "../store/activeUser/slice"
 export default function Login() {
+    const dispatch = useDispatch();
 
+    const [credentials, setCredentials] = useState({
+        email:"",
+        password: "",
 
+    })
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+       dispatch(login(credentials));
+    }
     return (
         <div>
-            <form>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
+            <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <label htmlFor="email">Email address</label>
+                    <input 
+                    type="email" 
+                    className="form-control" 
+                    id="email" 
+                    value={credentials.email}
+                    onChange ={({ target }) =>
+                    setCredentials({ ...credentials, email: target.value })
+                  }
+                    placeholder="Enter email" />
                 </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
+                <div className="form-group">
+                    <label htmlFor="password">Password</label>
+                    <input 
+                    type="password" 
+                    className="form-control" 
+                    id="password" 
+                    value={credentials.password}
+                    onChange ={({ target }) =>
+                    setCredentials({ ...credentials, password: target.value })
+                  }
+                    placeholder="Password" />
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>
