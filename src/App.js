@@ -1,11 +1,16 @@
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+
 import NavBar from './components/NavBar';
 import SingleGradebook from './components/SingleGradebook';
+
 import AddGradebook from './pages/AddGradebook';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Teachers from './pages/Teachers';
+
+import PublicRoute from './components/routes/PublicRoute';
+import PrivateRoute from './components/routes/PrivateRoute';
 
 function App() {
   return (
@@ -13,24 +18,24 @@ function App() {
       <NavBar />
 
       <Switch >
-        <Route exact path='/'>
+        <PrivateRoute exact path='/'>
           <Home />
-        </Route>
-        <Route path='/login'>
+        </PrivateRoute>
+        <PublicRoute exact path='/login'>
           <Login />
-        </Route>
-        <Route path='/register'>
+        </PublicRoute>
+        <PublicRoute exact path='/register'>
           <Register />
-        </Route>
-        <Route path='/teachers'>
+        </PublicRoute>
+        <PrivateRoute exact path='/teachers'>
           <Teachers />
-        </Route>
-        <Route path='/my-gradebook'>
+        </PrivateRoute>
+        <PrivateRoute exact path='/my-gradebook'>
           <SingleGradebook />
-        </Route>
-        <Route path='/gradebooks/create'>
+        </PrivateRoute>
+        <PrivateRoute exact path='/gradebooks/create'>
           <AddGradebook />
-        </Route>
+        </PrivateRoute>
       </Switch >
     </Router>
 
