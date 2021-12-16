@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
-import NavBar from './components/NavBar';
+import PublicNavBar from './components/PublicNavBar';
+import PrivateNavBar from './components/PrivateNavBar';
+
 import SingleGradebook from './components/SingleGradebook';
 
 import AddGradebook from './pages/AddGradebook';
@@ -12,10 +14,15 @@ import Teachers from './pages/Teachers';
 import PublicRoute from './components/routes/PublicRoute';
 import PrivateRoute from './components/routes/PrivateRoute';
 
+import { useSelector } from "react-redux";
+import { selectIsAuthenticated } from './store/activeUser/selectors';
+
 function App() {
+  const isAuthenticated = useSelector(selectIsAuthenticated)
+
   return (
     <Router>
-      <NavBar />
+      {isAuthenticated ? <PrivateNavBar /> : <PublicNavBar />}
 
       <Switch >
         <PrivateRoute exact path='/'>

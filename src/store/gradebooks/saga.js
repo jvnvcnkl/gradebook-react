@@ -1,18 +1,25 @@
-import {put, call,takeLatest} from "redux-saga/effects"
+import { put, call, takeLatest } from "redux-saga/effects"
 
 import gradebookService from '../../services/GradebookService'
-import { setGradebooks,getGradebooks } from "./slice"
+import { setGradebooks, getGradebooks, appendGradebooks } from "./slice"
 
-function* handleGetGradebooks(){
+function* handleGetGradebooks({ payload }) {
     try {
-        const gradebooks = yield call(gradebookService.getAll);
-        yield put(setGradebooks(gradebooks));
+        const gradebooks = yield call(gradebookService.getAll, payload.page, payload.filter);
+
+        if (!payload.page || payload.page == 1) {
+            yield put(setGradebooks(gradebooks));
+        } else {
+
+            yield put(appendGradebooks(gradebooks))
+        }
+
     } catch (error) {
         console.log(error)
     }
 }
 
 
-export function* watchGetGradebooks(){
-    yield takeLatest(getGradebooks.type,handleGetGradebooks);
+export function* watchGetGradebooks() {
+    yield takeLatest(getGradebooks.type, handleGetGradebooks);
 }

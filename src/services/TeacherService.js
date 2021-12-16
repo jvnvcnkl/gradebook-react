@@ -2,7 +2,7 @@ import HttpService from "./HttpService";
 
 
 class TeacherService extends HttpService {
-    
+
     getAll = async () => {
         try {
             const { data } = await this.client.get("teachers");
@@ -17,7 +17,7 @@ class TeacherService extends HttpService {
         try {
             const { data } = await this.client.get("teachers/available");
             return data;
-            
+
         } catch (error) {
             console.log(error);
         }
@@ -25,8 +25,8 @@ class TeacherService extends HttpService {
         return [];
     }
 
-    
-    
+
+
 }
 
 const teacherService = new TeacherService();
