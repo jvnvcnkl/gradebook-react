@@ -14,15 +14,13 @@ export default function Teachers() {
 
     useEffect(() => {
         dispatch(getTeachers());
-        console.log(teachers);
-
 
     }, [])
     return (
         <div>
             <ul>
                 {teachers &&
-                    teachers.data.map((teacher) => (
+                    teachers.map((teacher) => (
                         <li key={teacher.id}>
                             <SingleTeacher props={teacher} /> </li>
                     ))}

@@ -1,11 +1,13 @@
 import React, {useEffect,useState} from 'react';
-import { setGradebooks } from '../store/gradebooks/slice';
+import { createGradebook, setGradebooks } from '../store/gradebooks/slice';
 import { useDispatch } from 'react-redux';
 import teacherService from '../services/TeacherService';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 export default function AddGradebook() {
 
     const dispatch = useDispatch();
+    const history = useHistory();
     const [gradebookData,setGradebookData]= useState({
         name:"",
         teacherId:"",
@@ -18,8 +20,16 @@ export default function AddGradebook() {
           setAvailableTeachers(teachers);
         };
         fetchTeachers();
-      }, [availableTeachers]);
+      }, []);
 
+      const handleSubmit = () =>{
+          dispatch(createGradebook(gradebookData))
+          console.log(gradebookData)
+      }
+
+      const handleCancel = ()=>{
+        history.push('/')
+      }
     return (
         <div>
             <h2>Add gradebook </h2>
@@ -45,8 +55,8 @@ export default function AddGradebook() {
                         </option>
                     ))}
                  </select>
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <button type="submit" class="btn btn-primary">Cancel</button>
+                <button type="submit" class="btn btn-primary" onClick={()=>handleSubmit()}>Submit</button>
+                <button type="submit" class="btn btn-primary" onClick={()=>handleCancel()}>Cancel</button>
 
             </form>
 

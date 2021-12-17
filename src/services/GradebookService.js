@@ -38,8 +38,9 @@ class GradebookService extends HttpService {
 
     add = async (newGradebook) => {
         try {
+            console.log(newGradebook)
             const { data } = await this.client.post("gradebooks", newGradebook);
-
+            console.log(data)
             return data;
         } catch (error) {
             console.log(error);

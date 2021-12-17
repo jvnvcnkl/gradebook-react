@@ -16,7 +16,9 @@ class TeacherService extends HttpService {
     getAvailable = async () => {
         try {
             const { data } = await this.client.get("teachers/available");
+            console.log(data)
             return data;
+            
 
         } catch (error) {
             console.log(error);
