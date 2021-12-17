@@ -1,7 +1,8 @@
 import { put, call, takeLatest } from "redux-saga/effects"
 
 import gradebookService from '../../services/GradebookService'
-import { getGradebooks,
+import {
+    getGradebooks,
     createGradebook,
     editGradebook,
     deleteGradebook,
@@ -9,7 +10,8 @@ import { getGradebooks,
     appendGradebooks,
     addGradebook,
     updateGradebook,
-    deleteGradebookSuccess, } from "./slice"
+    deleteGradebookSuccess,
+} from "./slice"
 
 function* handleGetGradebooks({ payload }) {
     try {
@@ -27,9 +29,10 @@ function* handleGetGradebooks({ payload }) {
     }
 }
 
-function* handleCreateGradebook({payload}){
+function* handleCreateGradebook({ payload }) {
     try {
-        const newGradebook = yield call(gradebookService.add,payload.data);
+        console.log(payload)
+        const newGradebook = yield call(gradebookService.add, payload);
 
         yield put(addGradebook(newGradebook));
 
@@ -38,9 +41,9 @@ function* handleCreateGradebook({payload}){
     }
 }
 
-function* handleEditGradebook({payload}){
+function* handleEditGradebook({ payload }) {
     try {
-        const gradebook = yield call(gradebookService,payload.id,payload.data);
+        const gradebook = yield call(gradebookService, payload.id, payload.data);
 
         yield put(updateGradebook(gradebook));
     } catch (error) {
@@ -48,7 +51,7 @@ function* handleEditGradebook({payload}){
     }
 }
 
-function* handleDeleteGradebook({payload}){
+function* handleDeleteGradebook({ payload }) {
     try {
         yield call(gradebookService.delete, payload);
         yield put(deleteGradebookSuccess(payload));

@@ -3,9 +3,10 @@ import HttpService from "./HttpService";
 
 class TeacherService extends HttpService {
 
-    getAll = async () => {
+    getAll = async (filter = '') => {
         try {
-            const { data } = await this.client.get("teachers");
+            console.log(filter)
+            const { data } = await this.client.get(`teachers/?filter=${filter}`);
             return data;
         } catch (error) {
             console.log(error);
@@ -18,7 +19,7 @@ class TeacherService extends HttpService {
             const { data } = await this.client.get("teachers/available");
             console.log(data)
             return data;
-            
+
 
         } catch (error) {
             console.log(error);

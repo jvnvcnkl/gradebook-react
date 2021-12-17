@@ -1,4 +1,4 @@
-import { takeLatest,put, call } from "redux-saga/effects";
+import { takeLatest, put, call } from "redux-saga/effects";
 import authService from "../../services/AuthService";
 import {
     setActiveUser,
@@ -7,34 +7,34 @@ import {
     register,
     logout,
     getActiveUser,
-  } from "./slice";
+} from "./slice";
 
-  function* handleLogin(action){
-      try {
-          const data = yield call(authService.login, action.payload);
-          localStorage.setItem("token",data.token);
-
-          yield put(setActiveUser(data.user));
-          yield put(setToken(data.token));
-      } catch (error) {
-          console.log(error)
-      }
-  }
-
-  
-function* handleRegister({payload}) {
+function* handleLogin(action) {
     try {
-        const data = yield call(authService.register,payload);
-        localStorage.setItem("token",data.token);
+        const data = yield call(authService.login, action.payload);
+        localStorage.setItem("token", data.token);
 
         yield put(setActiveUser(data.user));
         yield put(setToken(data.token));
     } catch (error) {
-      console.log(error)
+        console.log(error)
     }
 }
 
-function* handleLogout(){
+
+function* handleRegister({ payload }) {
+    try {
+        const data = yield call(authService.register, payload);
+        localStorage.setItem("token", data.token);
+
+        yield put(setActiveUser(data.user));
+        yield put(setToken(data.token));
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+function* handleLogout() {
     try {
         yield call(authService.logout);
         localStorage.removeItem("token");
@@ -46,26 +46,26 @@ function* handleLogout(){
     }
 }
 
-function* handleGetActiveUser(){
-    try {  
+function* handleGetActiveUser() {
+    try {
         const activeUser = yield call(authService.getActiveUser);
         yield put(setActiveUser(activeUser));
-        
+
     } catch (error) {
         console.log(error)
     }
 }
 
 
-export function* watchLogin(){
+export function* watchLogin() {
     yield takeLatest(login.type, handleLogin);
 }
-export function* watchRegister(){
+export function* watchRegister() {
     yield takeLatest(register.type, handleRegister);
 }
-export function* watchLogout(){
+export function* watchLogout() {
     yield takeLatest(logout.type, handleLogout);
 }
-export function* watchGetActiveUser(){
+export function* watchGetActiveUser() {
     yield takeLatest(getActiveUser.type, handleGetActiveUser);
 }

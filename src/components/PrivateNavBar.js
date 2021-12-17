@@ -1,6 +1,13 @@
+import { useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
+import { logout } from "../store/activeUser/slice";
 
 export default function NavBar() {
+    const dispatch = useDispatch();
+
+    async function handleLogout() {
+        dispatch(logout());
+    }
     return (
         <nav>
             <ul>
@@ -18,7 +25,7 @@ export default function NavBar() {
                     <Link to='/gradebooks/create'>Add Gradebook </Link>
                 </li>
                 <li>
-                    <Link to='/logout'>Logout</Link>
+                    <button onClick={handleLogout}> Logout</button>
                 </li>
 
             </ul>
