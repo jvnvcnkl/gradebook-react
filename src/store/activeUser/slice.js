@@ -20,6 +20,7 @@ const activeUserslice = createSlice({
         setToken(state,{payload}){
             state.token = payload;
         },
+        
         ...middlewareActions,
     }
 })
@@ -29,6 +30,7 @@ export default activeUserslice.reducer;
 export const {
     setActiveUser,
     getActiveUser,
+    setActiveUserGradebook,
     setToken,
     login,
     register,

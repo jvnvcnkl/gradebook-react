@@ -1,6 +1,8 @@
+import { useSelector } from "react-redux";
 import { put, call, takeLatest } from "redux-saga/effects"
 
 import gradebookService from '../../services/GradebookService'
+import { selectGradebooks } from "./selectors";
 import {
     getGradebooks,
     createGradebook,
@@ -11,7 +13,11 @@ import {
     addGradebook,
     updateGradebook,
     deleteGradebookSuccess,
+    setActiveGradebook,
+    getActiveGradebook,
+    removeActiveGradebook
 } from "./slice"
+
 
 function* handleGetGradebooks({ payload }) {
     try {
@@ -31,7 +37,6 @@ function* handleGetGradebooks({ payload }) {
 
 function* handleCreateGradebook({ payload }) {
     try {
-        console.log(payload)
         const newGradebook = yield call(gradebookService.add, payload);
 
         yield put(addGradebook(newGradebook));
@@ -43,9 +48,12 @@ function* handleCreateGradebook({ payload }) {
 
 function* handleEditGradebook({ payload }) {
     try {
-        const gradebook = yield call(gradebookService, payload.id, payload.data);
+        const gradebook = yield call(gradebookService.put, payload.id, payload.data);
 
         yield put(updateGradebook(gradebook));
+        
+
+        
     } catch (error) {
         console.log(error)
     }
@@ -55,7 +63,24 @@ function* handleDeleteGradebook({ payload }) {
     try {
         yield call(gradebookService.delete, payload);
         yield put(deleteGradebookSuccess(payload));
-
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
+function* handleGetActiveGradebook({ payload }) {
+    try {
+        const activeGradebook = yield call(gradebookService.get, payload.id);
+        yield put(setActiveGradebook(activeGradebook));
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
+function* handleRemoveActiveGradebook() {
+    try {
+        yield put(setActiveGradebook(null));
+        
     } catch (error) {
         console.log(error)
     }
@@ -73,4 +98,10 @@ export function* watchUpdateGradebook() {
 }
 export function* watchDeleteGradebook() {
     yield takeLatest(deleteGradebook.type, handleDeleteGradebook);
+}
+export function* watchGetActiveGradebook() {
+    yield takeLatest(getActiveGradebook.type, handleGetActiveGradebook);
+}
+export function* watchRemoveActiveGradebook() {
+    yield takeLatest(removeActiveGradebook.type, handleRemoveActiveGradebook);
 }

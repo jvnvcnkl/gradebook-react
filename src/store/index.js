@@ -4,13 +4,11 @@ import sagas from './sagas';
 
 import activeUserReducer from "./activeUser/slice";
 import gradebooksReducer from "./gradebooks/slice";
-import studentsReducer from "./students/slice";
 import teachersReducer from "./teachers/slice";
 
 const reducers = {
     activeUser: activeUserReducer,
     gradebooks: gradebooksReducer,
-    students: studentsReducer,
     teachers: teachersReducer,
 }
 

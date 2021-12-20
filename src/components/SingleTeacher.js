@@ -1,6 +1,6 @@
 import React from "react"
 
-export default function SingleGradebook({ props }) {
+export default function SingleTeacher({ props }) {
 
     const teacher = {
         fullName: props.first_name + ' ' + props.last_name,

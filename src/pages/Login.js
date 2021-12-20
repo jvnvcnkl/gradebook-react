@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import {useDispatch} from "react-redux"
+import {useSelector,useDispatch} from "react-redux"
 
 import {login } from "../store/activeUser/slice"
 export default function Login() {
@@ -10,7 +10,6 @@ export default function Login() {
         password: "",
 
     })
-
     const handleSubmit = (e) => {
         e.preventDefault();
        dispatch(login(credentials));
@@ -42,8 +41,8 @@ export default function Login() {
                   }
                     placeholder="Password" />
                 </div>
-
                 <button type="submit" class="btn btn-primary">Submit</button>
+               
             </form>
         </div>
     )

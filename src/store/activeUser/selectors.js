@@ -5,3 +5,7 @@ export function selectActiveUser(state) {
 export function selectIsAuthenticated(state) {
     return !!state.activeUser.token;
   }
+
+export function selectActiveUserGradebook(state){
+  return state.activeUser.userGradebook;
+}

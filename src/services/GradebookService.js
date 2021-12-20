@@ -15,7 +15,6 @@ class GradebookService extends HttpService {
             }
             const query = params.join('&')
             const { data } = await this.client.get(`gradebooks/${query}`);
-            console.log(data)
             return data;
         } catch (error) {
             console.log(error);
@@ -27,7 +26,6 @@ class GradebookService extends HttpService {
     get = async (id) => {
         try {
             const { data } = await this.client.get(`gradebooks/${id}`);
-
             return data;
         } catch (error) {
             console.log(error);

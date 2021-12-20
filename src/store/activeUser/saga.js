@@ -12,12 +12,12 @@ import {
 function* handleLogin(action) {
     try {
         const data = yield call(authService.login, action.payload);
+        console.log(data)
         localStorage.setItem("token", data.token);
-
         yield put(setActiveUser(data.user));
         yield put(setToken(data.token));
     } catch (error) {
-        console.log(error)
+     alert(error.response.data.message)
     }
 }
 
@@ -56,7 +56,6 @@ function* handleGetActiveUser() {
     }
 }
 
-
 export function* watchLogin() {
     yield takeLatest(login.type, handleLogin);
 }
@@ -69,3 +68,4 @@ export function* watchLogout() {
 export function* watchGetActiveUser() {
     yield takeLatest(getActiveUser.type, handleGetActiveUser);
 }
+

@@ -10,7 +10,8 @@ export default function Home() {
     const dispatch = useDispatch()
     const gradebooks = useSelector(selectGradebooks)
     const [filter, setFilter] = useState('')
-
+    console.log(gradebooks)
+    const lastPage= !!(gradebooks.last_page > gradebooks.current_page)
     useEffect(() => {
         dispatch(getGradebooks({
             page: 1
@@ -41,13 +42,14 @@ export default function Home() {
                     setFilter(target.value)}
                 placeholder='Filter by name' />
             <ul>
-                {gradebooks &&
-                    gradebooks.data.map((gradebook) => (
+                {gradebooks ? ( 
+                    gradebooks.data
+                    .map((gradebook) => (
                         <li key={gradebook.id}>
                             <SingleGradebook props={gradebook} /> </li>
-                    ))}
+                    )) ): "No gradebooks to show"} 
             </ul>
-            <button onClick={() => handleLoadMore()}>Load more</button>
+            {lastPage ? ( <button onClick={() => handleLoadMore()}>Load more</button> ) : 'No more gradebooks to show'}
         </div>
     )
 

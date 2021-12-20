@@ -5,6 +5,8 @@ const middlewareActions = {
     createGradebook() {},
     editGradebook(){},
     deleteGradebook(){},
+    getActiveGradebook(){},
+    removeActiveGradebook(){},
 
 }
 
@@ -14,7 +16,9 @@ export const gradebooksSlice = createSlice({
         page: {
             data: [],
             current_page: 0,
-        }
+            last_page: 1
+        },
+        activeGradebook: {},
     },
     reducers: {
         setGradebooks(state, action) {
@@ -25,6 +29,11 @@ export const gradebooksSlice = createSlice({
             state.page = {
                 ...action.payload,
                 data: [...state.page.data, ...action.payload.data]
+            }
+        },
+        setActiveGradebook(state,action){
+            state.activeGradebook = {
+                ...action.payload
             }
         },
         addGradebook(state,action){
@@ -56,6 +65,9 @@ export const {
     addGradebook,
     updateGradebook,
     deleteGradebookSuccess,
+    setActiveGradebook,
+    getActiveGradebook,
+    removeActiveGradebook
 } = gradebooksSlice.actions;
 
 export default gradebooksSlice.reducer;
