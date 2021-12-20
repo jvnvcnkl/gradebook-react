@@ -9,7 +9,7 @@ class AuthService extends HttpService {
     };
   
     login = async (credentials) => {
-      const { data } = await this.client.post("/auth/login", credentials);
+      const {data} = await this.client.post("/auth/login", credentials);
       localStorage.setItem("token", data.token);
       return data;
     };

@@ -1,28 +1,31 @@
-import {createSlice} from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 
 const middlewareActions = {
-    getTeachers() {},
+    getTeachers() { },
 
 }
 
 export const teachersSlice = createSlice({
-    name:"gradebooks",
-    initialState:{
+    name: "teachers",
+    initialState: {
         data: [
-
+            {
+                id: "",
+                email: "",
+            }
         ],
     },
     reducers: {
-        setTeachers(state,action){
+        setTeachers(state, action) {
             state.data = action.payload
         },
         ...middlewareActions,
     },
-    
+
 });
 
-export const { 
+export const {
     getTeachers,
-    setTeachers} = teachersSlice.actions;
+    setTeachers } = teachersSlice.actions;
 
-export default teachersSlice.reducer ;
+export default teachersSlice.reducer;

@@ -2,10 +2,19 @@ import HttpService from "./HttpService";
 
 
 class GradebookService extends HttpService {
-    
-    getAll = async () => {
+
+    getAll = async (page = 1, filter = '') => {
         try {
-            const { data } = await this.client.get("gradebooks");
+            let params = []
+
+            if (!!filter) {
+                params.push(`?filter=${filter}`)
+            }
+            if (page != 1) {
+                params.push(`?page=${page}`)
+            }
+            const query = params.join('&')
+            const { data } = await this.client.get(`gradebooks/${query}`);
             return data;
         } catch (error) {
             console.log(error);
@@ -14,10 +23,9 @@ class GradebookService extends HttpService {
         return [];
     }
 
-    get= async (id) =>  {
+    get = async (id) => {
         try {
             const { data } = await this.client.get(`gradebooks/${id}`);
-
             return data;
         } catch (error) {
             console.log(error);
@@ -26,10 +34,11 @@ class GradebookService extends HttpService {
         return null;
     }
 
-    add = async(newGradebook)=>{
+    add = async (newGradebook) => {
         try {
+            console.log(newGradebook)
             const { data } = await this.client.post("gradebooks", newGradebook);
-
+            console.log(data)
             return data;
         } catch (error) {
             console.log(error);
@@ -38,7 +47,7 @@ class GradebookService extends HttpService {
         return null;
     }
 
-    edit= async(id, movie) => {
+    edit = async (id, movie) => {
         try {
             const { data } = await this.client.put(`gradebooks/${id}`, movie);
 
@@ -50,7 +59,7 @@ class GradebookService extends HttpService {
         return null;
     }
 
-    delete= async (id) =>{
+    delete = async (id) => {
         try {
             const { data } = await this.client.delete(`gradebooks/${id}`);
 
